@@ -6,7 +6,9 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/ninja-dark/QSOFT-task/internal/infrastructure/api/handler"
+	"github.com/ninja-dark/QSOFT-task/internal/infrastructure/api/middleware"
 )
 
 type RouterGin struct {
@@ -19,6 +21,7 @@ func NewRouterGin(hs *handler.Handlers) *RouterGin {
 	ret := &RouterGin{
 		hs: hs,
 	}
+	r.Use(middleware.CheckHeader)
 	r.GET("/when/:year", ret.GetCountDays)
 	ret.Engine = r
 	return ret
