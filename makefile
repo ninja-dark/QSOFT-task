@@ -1,5 +1,5 @@
 build:
-	go build -o bin/main main.go
+	go build -o qsoft-task cmd/qsoft_task/main.go
 
-run:
-	go run cmd/qsoft_task/main.go
+run: build
+		./qsoft-task
