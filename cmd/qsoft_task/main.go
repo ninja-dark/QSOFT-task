@@ -25,7 +25,7 @@ func main(){
 	defer func() { _ = logger.Sync() }()
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 
-	if err := godotenv.Load("../config/.env"); err != nil {
+	if err := godotenv.Load("config/.env"); err != nil {
 		logger.Sugar().Fatalf("Cannot load config, due to error: %s", err.Error())
 	}
 
