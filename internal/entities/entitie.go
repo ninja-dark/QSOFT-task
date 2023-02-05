@@ -1,6 +1,6 @@
 package entitie
 
-type Days struct{
-	Message string `json: "Message"`
-	NumberOfDays int `json: "Days"`
+type Days struct {
+        Message      string `json: "Message"`
+        NumberOfDays int    `json: "Days"`
 }

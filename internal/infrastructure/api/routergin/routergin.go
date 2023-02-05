@@ -1,42 +1,42 @@
 package routergin
 
 import (
-	"net/http"
+        "net/http"
 
-	"strconv"
+        "strconv"
 
-	"github.com/gin-gonic/gin"
+        "github.com/gin-gonic/gin"
 
-	"github.com/ninja-dark/QSOFT-task/internal/infrastructure/api/handler"
-	"github.com/ninja-dark/QSOFT-task/internal/infrastructure/api/middleware"
+        "github.com/ninja-dark/QSOFT-task/internal/infrastructure/api/handler"
+        "github.com/ninja-dark/QSOFT-task/internal/infrastructure/api/middleware"
 )
 
 type RouterGin struct {
-	*gin.Engine
-	hs *handler.Handlers
+        *gin.Engine
+        hs *handler.Handlers
 }
 
 func NewRouterGin(hs *handler.Handlers) *RouterGin {
-	r := gin.Default()
-	ret := &RouterGin{
-		hs: hs,
-	}
-	r.Use(middleware.CheckHeader)
-	r.GET("/when/:year", ret.GetCountDays)
-	ret.Engine = r
-	return ret
+        r := gin.Default()
+        ret := &RouterGin{
+                hs: hs,
+        }
+        r.Use(middleware.CheckHeader)
+        r.GET("/when/:year", ret.GetCountDays)
+        ret.Engine = r
+        return ret
 }
 
 func (rt *RouterGin) GetCountDays(c *gin.Context) {
-	inputYear, err := strconv.Atoi(c.Param("year"))
-	if err != nil{
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	d, err := rt.hs.GetCountDays(c.Request.Context(), inputYear)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.String(http.StatusOK, "%s%d", d.Message, d.Count)
+        inputYear, err := strconv.Atoi(c.Param("year"))
+        if err != nil {
+                c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+                return
+        }
+        d, err := rt.hs.GetCountDays(c.Request.Context(), inputYear)
+        if err != nil {
+                c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+                return
+        }
+        c.String(http.StatusOK, "%s%d", d.Message, d.Count)
 }
